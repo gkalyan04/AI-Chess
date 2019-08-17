@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AI Chess</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+    <link rel="apple-touch-icon" sizes="57x57" href="img/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16x16.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato|Roboto:500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="lib/chessboardjs/css/chessboard-0.3.0.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+                .shine {
+        color: #fff;
+        font-size: 40px;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 6px;
+        display: inline-block;
+        position: relative;
+        font-family: 'Merriweather', serif;
+        -webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 70%);
+        -webkit-mask-size: 200%;
+        animation: shine 2s linear infinite;
+      }
+
+      @keyframes shine {
+        from { -webkit-mask-position: 150%; }
+        to { -webkit-mask-position: -50%; }
+      }
+      @font-face {
+      font-family: 'productsans';
+      src: url('ProductSans-Regular.ttf');
+    }
+
+
+
+@keyframes wave {
+  from { transform: rotate(0deg);}
+  from { transform: rotate(360deg);}
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light" >
+        <a class="navbar-brand" href="#" style="color:black" >
+            <img src="img/icons/dsc.jpg" width="70" height="30" class="d-inline-block align-top" alt="">
+            DSC - BVP
+          </a>
+          <img src="img/icons/ms-icon-150x150.png" width="50" height="50" class="d-inline-block align-top"alt="">
+          <div class="navbar-nav" style="font-family: 'productsans';color:#777777">
+              Select Level &nbsp 
+              <select id="search-depth">
+                <option value="1" >1 <p >- Beginner</p></option>
+                <option value="2">2 <p>- Elementary</p></option>
+                <option value="3" selected>3 <p>- Intermediate</p></option>
+                <option value="4">4 <p>- Advanced</p></option>
+                <option value="5">5 <p>- Proficient</p></option>
+              </select>
+          </div>
+      
+
+    </nav>
+    <br>
+  </div>
+  <div class="wrapper">
+    
+  
+    <div class= "info" style="text-align: center">
+      <!-- <img src="img/icons/ms-icon-150x150.png" width="50" height="50" class="d-inline-block align-top" alt=""> -->
+      <h2 style=" font-family: 'productsans';color:#777777;" class="shine"> AI CHESS </h2>
+      
+    </div>
+    <br>
+    
+  <div id="board" class="board"></div>
+  <div class="info">
+      <br>
+      <div class="text-center">
+        <button class="btn btn-sm btn-info" onclick="reset();">Reset Game</button>
+        <button class="btn btn-sm btn-success" onclick="undo();">Undo Move</button>
+      </div>
+      <br>
+      <!-- <div class="card bg-light text-dark">
+        <div class="card-header text-center">
+          Stats
+        </div>
+        <div class="card-body">
+            Search Depth: &nbsp 
+            <select id="search-depth">
+              <option value="1">Begginer</option>
+              <option value="2"></option>
+              <option value="3" selected>Intermediate</option>
+              <option value="4">4</option>
+              <option value="5">Expert</option>
+            </select>
+          <br>
+          <span>Positions evaluated: <span id="position-count"></span></span>
+          <br>
+          <span>Time: <span id="time"></span></span>
+          <br>
+          <span>Positions/s: <span id="positions-per-s"></span> </span>
+          <br>
+        </div>
+      </div> -->
+
+      <div class="wave"></div>
+  </div>
+  
+  <script src="lib/jquery/jquery-3.2.1.min.js"></script>
+  <script src="lib/chessjs/chess.js"></script>
+  <script src="lib/chessboardjs/js/chessboard-0.3.0.min.js"></script>
+
+  <script type="text/javascript" src="js/eval.js"></script>
+  <script type="text/javascript" src="js/events.js"></script>
+  <script type="text/javascript" src="js/conf.js"></script>
+  <script type="text/javascript" src="js/zobrist.js"></script>
+  <script type="text/javascript" src="js/agent.js"></script>
+
+  <script type="text/javascript">
+    //This is the "Offline copy of pages" service worker
+    //Add this below content to your HTML page, or add the js file to your page at the very top to register service worker
+    if (navigator.serviceWorker.controller) {
+      console.log('[PWA Builder] active service worker found, no need to register')
+    } else {
+      //Register the ServiceWorker
+      navigator.serviceWorker.register('sw.js', {
+        scope: './'
+      }).then(function(reg) {
+        console.log('Service worker has been registered for scope:'+ reg.scope);
+      });
+    }
+  </script>
+</body>
+</html>
